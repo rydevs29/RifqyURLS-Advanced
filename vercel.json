@@ -1,8 +1,10 @@
 {
+  "cleanUrls": true,
   "rewrites": [
-    {
-      "source": "/:id",
-      "destination": "/index.html?id=:id"
-    }
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/go", "destination": "/go.html" },
+    { "source": "/guest", "destination": "/guest.html" },
+    { "source": "/:id", "destination": "/index.html?id=:id" }
   ]
 }
