@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RifqyURL | Fortress v9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col items-center justify-center p-4 min-h-screen relative">
+
+    <div class="fixed top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="fixed bottom-20 right-10 w-72 h-72 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div id="creatorApp" class="w-full max-w-xl glass-card p-8 rounded-3xl relative z-10 fade-in" style="animation-delay: 0.1s;">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Rifqy<span class="text-blue-500">URL</span></h1>
+            <div class="flex justify-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-bold border border-blue-500/20">FORTRESS v9</span>
+                <span class="px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 text-[10px] font-bold border border-red-500/20">FIREWALL ON</span>
+            </div>
+        </div>
+
+        <div class="space-y-5">
+            <div class="group">
+                <label class="block text-[10px] font-bold text-slate-400 mb-1.5 ml-1 uppercase tracking-wider">URL Tujuan (Pisahkan koma untuk Rotator)</label>
+                <div class="relative">
+                    <i class="fa-solid fa-link absolute left-4 top-4 text-slate-500 group-focus-within:text-blue-400 transition-colors"></i>
+                    <input type="text" id="longUrl" placeholder="https://site1.com, https://site2.com" class="input-field w-full pl-10 pr-4 py-3.5 rounded-xl outline-none text-sm text-white placeholder-slate-600">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1.5 ml-1 uppercase tracking-wider">Custom Alias</label>
+                    <input type="text" id="customId" placeholder="nama-keren" class="input-field w-full px-4 py-3 rounded-xl outline-none text-sm text-white placeholder-slate-600">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1.5 ml-1 uppercase tracking-wider">Durasi Link</label>
+                    <select id="expiryTime" class="input-field w-full px-4 py-3 rounded-xl outline-none text-sm text-slate-300 cursor-pointer">
+                        <option value="86400000">24 Jam</option>
+                        <option value="604800000" selected>7 Hari</option>
+                        <option value="2592000000">30 Hari</option>
+                        <option value="premium">✨ Permanen (Premium)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-700/50 pt-4">
+                <button onclick="document.getElementById('advOptions').classList.toggle('hidden')" class="text-xs text-blue-400 font-bold hover:text-blue-300 flex items-center gap-2 transition-colors">
+                    <i class="fa-solid fa-sliders"></i> Pengaturan Canggih
+                </button>
+                
+                <div id="advOptions" class="hidden mt-4 space-y-4 bg-slate-900/40 p-5 rounded-2xl border border-slate-700/30">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Password (Opsional)</label>
+                            <input type="text" id="linkPassword" class="input-field w-full px-3 py-2.5 rounded-lg text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Max Klik (0=Unli)</label>
+                            <input type="number" id="maxClicks" placeholder="0" class="input-field w-full px-3 py-2.5 rounded-lg text-xs text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Timer (Detik)</label>
+                            <input type="number" id="timerSec" placeholder="0 (Langsung)" class="input-field w-full px-3 py-2.5 rounded-lg text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 mb-1 uppercase">Blokir UA/Browser</label>
+                            <input type="text" id="uaBlock" placeholder="Contoh: Opera, UC" class="input-field w-full px-3 py-2.5 rounded-lg text-xs text-white">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-3 mt-2">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" id="isOneTime" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-blue-500 focus:ring-blue-500">
+                            <span class="text-xs font-bold text-slate-300 group-hover:text-white transition-colors">Self-Destruct (Hapus setelah 1x baca)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" id="isCloaked" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-blue-500 focus:ring-blue-500">
+                            <span class="text-xs font-bold text-slate-300 group-hover:text-white transition-colors">Link Cloaking (Sembunyikan URL Asli)</span>
+                        </label>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-700/30">
+                        <label class="block text-[10px] font-bold text-slate-400 mb-1.5 uppercase">Negara (Kode ISO)</label>
+                        <div class="flex gap-3">
+                            <input type="text" id="geoBlock" placeholder="ID, US, SG" class="input-field w-full px-3 py-2.5 rounded-lg text-xs uppercase text-white">
+                            <label class="flex items-center gap-2 cursor-pointer bg-slate-800 px-3 rounded-lg border border-slate-700 hover:border-blue-500 transition-colors">
+                                <input type="checkbox" id="isWhitelist" class="w-4 h-4 text-blue-500">
+                                <span class="text-[10px] font-bold text-white uppercase tracking-wider">Whitelist</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="shorten()" id="btnShorten" class="btn-primary w-full text-white font-bold py-4 rounded-xl transition-all flex justify-center items-center gap-2 mt-2">
+                Buat Link Sekarang <i class="fa-solid fa-bolt"></i>
+            </button>
+        </div>
+
+        <div id="resultArea" class="hidden mt-6 pt-6 border-t border-slate-700/50 fade-in">
+            <div class="flex flex-col items-center gap-5">
+                <div class="bg-white p-3 rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                    <img id="qrImage" src="" alt="QR" class="w-32 h-32 object-contain">
+                </div>
+                <div class="w-full flex gap-3 bg-slate-900 p-3 rounded-xl border border-slate-700 shadow-inner">
+                    <p id="shortLink" class="flex-1 text-blue-400 font-mono text-sm truncate flex items-center pl-2"></p>
+                    <button onclick="copyLink()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-5 py-2 rounded-lg font-bold transition-colors">Salin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="previewApp" class="hidden w-full max-w-md glass-card p-8 rounded-3xl text-center fade-in relative z-10">
+        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-blue-400/30">
+            <i class="fa-solid fa-shield-halved text-3xl text-white"></i>
+        </div>
+        
+        <h2 class="text-2xl font-bold text-white mb-2" id="prevTitle">Pemeriksaan Keamanan</h2>
+        
+        <div id="urlDisplayArea" class="mb-6 bg-slate-900/50 py-3 rounded-xl border border-slate-700/50">
+            <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest mb-1">Tujuan Link:</p>
+            <p id="visibleUrl" class="text-blue-400 text-xs font-mono truncate px-4">Loading...</p>
+        </div>
+
+        <a href="https://lynk.id/rifqyapps" target="_blank" class="block mb-6 ad-banner rounded-2xl p-5 text-left group hover:scale-[1.02] transition-transform cursor-pointer relative overflow-hidden">
+            <div class="relative z-10 flex items-center justify-between">
+                <div>
+                    <p class="text-[10px] font-bold text-pink-300 uppercase mb-1 tracking-widest"><i class="fa-solid fa-star text-yellow-300 mr-1"></i> Recommended</p>
+                    <h3 class="text-white font-bold text-[15px] mb-0.5">Kunjungi Lynk.id RifqyApps</h3>
+                    <p class="text-white/80 text-xs">Dapatkan aplikasi premium & source code.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right text-white text-xl group-hover:translate-x-1 transition-transform"></i>
+            </div>
+        </a>
+
+        <div id="dynamicContent" class="mb-6">
+            <div id="passArea" class="hidden mb-5 fade-in">
+                <input type="password" id="inputPass" placeholder="Masukkan Password Link" class="input-field w-full px-4 py-3.5 rounded-xl text-center text-white mb-2 font-mono tracking-widest">
+                <p id="passError" class="text-xs text-red-500 hidden font-bold"><i class="fa-solid fa-circle-exclamation mr-1"></i> Password Salah!</p>
+            </div>
+
+            <div class="flex justify-center gap-4 mb-6">
+                <button onclick="share('wa')" class="w-10 h-10 rounded-full bg-[#25D366]/20 text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all hover:scale-110 flex items-center justify-center text-lg shadow-lg"><i class="fa-brands fa-whatsapp"></i></button>
+                <button onclick="share('fb')" class="w-10 h-10 rounded-full bg-[#1877F2]/20 text-[#1877F2] hover:bg-[#1877F2] hover:text-white transition-all hover:scale-110 flex items-center justify-center text-lg shadow-lg"><i class="fa-brands fa-facebook-f"></i></button>
+                <button onclick="share('tw')" class="w-10 h-10 rounded-full bg-[#1DA1F2]/20 text-[#1DA1F2] hover:bg-[#1DA1F2] hover:text-white transition-all hover:scale-110 flex items-center justify-center text-lg shadow-lg"><i class="fa-brands fa-twitter"></i></button>
+                <button onclick="share('tg')" class="w-10 h-10 rounded-full bg-[#0088cc]/20 text-[#0088cc] hover:bg-[#0088cc] hover:text-white transition-all hover:scale-110 flex items-center justify-center text-lg shadow-lg"><i class="fa-brands fa-telegram"></i></button>
+            </div>
+            
+            <button onclick="reportLink()" class="text-xs text-slate-500 hover:text-red-400 flex items-center justify-center gap-2 w-full transition-colors font-bold">
+                <i class="fa-solid fa-flag"></i> Laporkan Link Ini
+            </button>
+        </div>
+
+        <button id="btnContinue" class="btn-primary w-full text-white font-bold py-4 rounded-xl transition-all shadow-lg flex justify-center items-center gap-2 text-sm uppercase tracking-wide">
+            <span id="btnText">Lanjut ke Tujuan</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <div id="errorApp" class="hidden text-center fade-in relative z-10 glass-card p-8 rounded-3xl max-w-sm w-full">
+        <div class="text-7xl mb-4 drop-shadow-lg">⛔</div>
+        <h1 id="errorTitle" class="text-3xl font-extrabold text-red-500 mb-2">Akses Ditolak</h1>
+        <p id="errorDesc" class="text-slate-300 text-sm mb-8">Link tidak dapat diakses.</p>
+        <a href="/" class="block w-full py-3.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold transition-all border border-slate-600">Buat Link Baru</a>
+    </div>
+
+    <div id="adminPanel" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4 fade-in">
+        <div class="w-full max-w-4xl glass-card rounded-2xl h-[85vh] flex flex-col border border-slate-700 shadow-2xl">
+            <div class="p-6 border-b border-slate-700/50 flex justify-between items-center bg-slate-900/50 rounded-t-2xl">
+                <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-server text-blue-500"></i> Admin & Firewall</h2>
+                <button onclick="document.getElementById('adminPanel').classList.add('hidden')" class="bg-red-500/10 text-red-400 px-4 py-2 rounded-lg font-bold hover:bg-red-500 hover:text-white transition-colors text-sm">Close Panel</button>
+            </div>
+            <div class="flex gap-6 px-6 pt-5 border-b border-slate-700/30 bg-slate-900/30">
+                <button onclick="switchTab('links')" id="tabLinks" class="pb-3 border-b-2 border-blue-500 text-blue-400 font-bold text-sm uppercase tracking-wider transition-colors">Database Links</button>
+                <button onclick="switchTab('firewall')" id="tabFirewall" class="pb-3 border-b-2 border-transparent text-slate-500 font-bold text-sm uppercase tracking-wider hover:text-slate-300 transition-colors">Firewall Rules</button>
+            </div>
+            <div class="flex-1 overflow-auto p-6" id="adminContent">
+                <div class="flex justify-center items-center h-full text-slate-500"><i class="fa-solid fa-circle-notch fa-spin text-3xl"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div onclick="unlockAdmin()" class="mt-8 text-slate-800 text-[10px] cursor-pointer hover:text-slate-600 select-none absolute bottom-4 right-4">v9.0-fortress</div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
