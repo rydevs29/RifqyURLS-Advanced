@@ -33,29 +33,29 @@
     <div class="fixed top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
     <div class="fixed bottom-20 right-10 w-72 h-72 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
-    <div class="w-full max-w-md glass-card p-10 rounded-[2rem] text-center relative z-10 fade-in">
-        <i class="fa-solid fa-link text-5xl text-blue-500 mb-4 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]"></i>
-        <h1 class="text-3xl font-extrabold text-white mb-2">Rifqy<span class="text-blue-500">URL</span></h1>
-        <p class="text-slate-400 text-sm mb-8">Masuk ke dalam benteng untuk mengelola link Anda secara permanen.</p>
+    <div class="w-[90%] sm:w-full max-w-md glass-card p-8 sm:p-10 rounded-[2rem] text-center relative z-10 fade-in">
+        <i class="fa-solid fa-link text-5xl sm:text-6xl text-blue-500 mb-4 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]"></i>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white mb-2 tracking-tight">Rifqy<span class="text-blue-500">URL</span></h1>
+        <p class="text-slate-400 text-xs sm:text-sm mb-8 leading-relaxed">Masuk ke dalam benteng untuk mengelola link Anda secara permanen.</p>
 
         <div class="space-y-4">
-            <button onclick="loginGoogle()" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-bold py-3.5 rounded-xl transition-all shadow-lg flex justify-center items-center gap-3">
+            <button onclick="loginGoogle()" class="w-full bg-white hover:bg-slate-100 text-slate-900 font-bold py-3.5 sm:py-4 rounded-xl transition-all shadow-lg flex justify-center items-center gap-3 active:scale-95">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
-                Lanjutkan dengan Google
+                <span class="text-sm sm:text-base">Lanjutkan dengan Google</span>
             </button>
             
-            <button onclick="loginMicrosoft()" class="w-full bg-[#2F2F2F] hover:bg-[#1f1f1f] border border-slate-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg flex justify-center items-center gap-3">
+            <button onclick="loginMicrosoft()" class="w-full bg-[#2F2F2F] hover:bg-[#1f1f1f] border border-slate-700 text-white font-bold py-3.5 sm:py-4 rounded-xl transition-all shadow-lg flex justify-center items-center gap-3 active:scale-95">
                 <img src="https://www.svgrepo.com/show/452062/microsoft.svg" class="w-5 h-5" alt="Microsoft">
-                Lanjutkan dengan Microsoft
+                <span class="text-sm sm:text-base">Lanjutkan dengan Microsoft</span>
             </button>
 
             <div class="flex items-center my-6">
-                <div class="flex-1 border-t border-slate-700"></div>
-                <span class="px-4 text-xs text-slate-500 font-bold uppercase tracking-wider">Atau</span>
-                <div class="flex-1 border-t border-slate-700"></div>
+                <div class="flex-1 border-t border-slate-700/50"></div>
+                <span class="px-4 text-[10px] sm:text-xs text-slate-500 font-bold uppercase tracking-widest">Atau</span>
+                <div class="flex-1 border-t border-slate-700/50"></div>
             </div>
 
-            <a href="/guest" class="block w-full bg-transparent hover:bg-slate-800 border border-slate-600 text-slate-300 hover:text-white font-bold py-3 rounded-xl transition-all">
+            <a href="/guest" class="block w-full bg-transparent hover:bg-slate-800/50 border border-slate-600 text-slate-300 hover:text-white font-bold py-3.5 sm:py-4 rounded-xl transition-all active:scale-95 text-sm sm:text-base">
                 Masuk Sebagai Tamu (Guest)
             </a>
         </div>
