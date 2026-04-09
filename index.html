@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RifqyURL | Fortress v9</title>
+    <title>RifqyURL | Fortress v10</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -64,20 +64,31 @@
         }
         .fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Animasi Menu Dropdown */
+        .dropdown-menu { display: none; position: absolute; right: 0; top: 100%; z-index: 50; }
+        .dropdown-menu.show { display: block; animation: fadeIn 0.2s ease-out; }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4 min-h-screen relative">
 
+    <div id="userNavbar" class="fixed top-4 right-4 z-50 hidden fade-in">
+        <div class="bg-slate-900/80 backdrop-blur border border-slate-700 px-4 py-2 rounded-full flex items-center gap-3 shadow-lg">
+            <span id="userEmailNav" class="text-xs text-slate-300 font-bold hidden sm:block">user@email.com</span>
+            <button onclick="logoutUser()" class="text-red-400 hover:text-red-300 text-xs font-bold"><i class="fa-solid fa-power-off"></i> Keluar</button>
+        </div>
+    </div>
+
     <div class="fixed top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
     <div class="fixed bottom-20 right-10 w-72 h-72 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
-    <div id="creatorApp" class="w-full max-w-xl glass-card p-8 rounded-3xl relative z-10 fade-in" style="animation-delay: 0.1s;">
+    <div id="creatorApp" class="w-[95%] sm:w-full max-w-xl glass-card p-6 sm:p-8 rounded-3xl relative z-10 hidden">
         <div class="text-center mb-8">
             <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Rifqy<span class="text-blue-500">URL</span></h1>
             
             <div class="flex justify-center gap-2">
-                <span class="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-bold border border-blue-500/20">FORTRESS v9</span>
-                <span class="px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 text-[10px] font-bold border border-red-500/20">FIREWALL ON</span>
+                <span class="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-bold border border-blue-500/20">CITIZEN TIER</span>
+                <span class="px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/20">SECURE</span>
             </div>
         </div>
 
@@ -93,7 +104,7 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-[10px] font-bold text-slate-400 mb-1.5 ml-1 uppercase">Custom Alias</label>
-                    <input type="text" id="customId" placeholder="nama-keren" class="input-field w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-600">
+                    <input type="text" id="customId" placeholder="opsional" class="input-field w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-600">
                 </div>
                 <div>
                     <label class="block text-[10px] font-bold text-slate-400 mb-1.5 ml-1 uppercase">Durasi Link</label>
@@ -169,14 +180,21 @@
                     <img id="qrImage" src="" alt="QR" class="w-24 h-24 object-contain">
                 </div>
                 <div class="w-full flex gap-2 bg-slate-900/80 p-3 rounded-xl border border-slate-700">
-                    <p id="shortLink" class="flex-1 text-blue-400 font-mono text-sm truncate flex items-center"></p>
+                    <p id="shortLink" class="flex-1 text-blue-400 font-mono text-sm truncate flex items-center pl-2"></p>
                     <button onclick="copyLink()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-4 rounded-lg font-bold transition-colors">Salin</button>
                 </div>
             </div>
         </div>
+
+        <div id="historyArea" class="mt-8 pt-6 border-t border-slate-700/50">
+            <h2 class="text-white font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-blue-500"></i> Link Saya</h2>
+            <div id="myLinksList" class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                <p class="text-slate-500 text-xs text-center italic py-4">Memuat data...</p>
+            </div>
+        </div>
     </div>
 
-    <div id="previewApp" class="hidden w-full max-w-md glass-card p-6 rounded-3xl text-center fade-in">
+    <div id="previewApp" class="hidden w-[90%] max-w-md glass-card p-6 rounded-3xl text-center fade-in">
         <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/20">
             <i class="fa-solid fa-shield-halved text-2xl text-white"></i>
         </div>
@@ -204,13 +222,6 @@
                 <input type="password" id="inputPass" placeholder="Masukkan Password Link" class="input-field w-full px-4 py-3 rounded-xl text-center text-white mb-2">
                 <p id="passError" class="text-xs text-red-500 hidden font-bold">Password Salah!</p>
             </div>
-
-            <div class="flex justify-center gap-3 mb-6">
-                <button onclick="share('wa')" class="w-8 h-8 rounded-full bg-green-500/20 text-green-500 hover:bg-green-500 hover:text-white transition flex items-center justify-center"><i class="fa-brands fa-whatsapp"></i></button>
-                <button onclick="share('fb')" class="w-8 h-8 rounded-full bg-blue-600/20 text-blue-600 hover:bg-blue-600 hover:text-white transition flex items-center justify-center"><i class="fa-brands fa-facebook-f"></i></button>
-                <button onclick="share('tw')" class="w-8 h-8 rounded-full bg-sky-400/20 text-sky-400 hover:bg-sky-400 hover:text-white transition flex items-center justify-center"><i class="fa-brands fa-twitter"></i></button>
-                <button onclick="share('tg')" class="w-8 h-8 rounded-full bg-blue-400/20 text-blue-400 hover:bg-blue-400 hover:text-white transition flex items-center justify-center"><i class="fa-brands fa-telegram"></i></button>
-            </div>
             
             <button onclick="reportLink()" class="text-[10px] text-slate-500 hover:text-red-400 flex items-center justify-center gap-1 w-full mb-4">
                 <i class="fa-solid fa-flag"></i> Laporkan Link Ini
@@ -222,28 +233,12 @@
         </button>
     </div>
 
-    <div id="errorApp" class="hidden text-center fade-in">
+    <div id="errorApp" class="hidden text-center fade-in w-[90%] max-w-sm glass-card p-8 rounded-3xl">
         <div class="text-6xl mb-4">⛔</div>
         <h1 id="errorTitle" class="text-3xl font-extrabold text-white mb-2">Akses Ditolak</h1>
-        <p id="errorDesc" class="text-slate-400 text-sm mb-8 max-w-xs mx-auto">Link tidak dapat diakses.</p>
-        <a href="/" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold transition-all border border-slate-600">Buat Link Baru</a>
+        <p id="errorDesc" class="text-slate-400 text-sm mb-8">Link tidak dapat diakses.</p>
+        <a href="/" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold transition-all border border-slate-600 block w-full">Buat Link Baru</a>
     </div>
-
-    <div id="adminPanel" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="w-full max-w-4xl glass-card rounded-2xl h-[80vh] flex flex-col">
-            <div class="p-6 border-b border-slate-700/50 flex justify-between items-center">
-                <h2 class="text-xl font-bold text-white">Admin & Firewall</h2>
-                <button onclick="document.getElementById('adminPanel').classList.add('hidden')" class="bg-red-500/20 text-red-400 px-3 py-1 rounded hover:bg-red-500 hover:text-white">Close</button>
-            </div>
-            <div class="flex gap-4 px-6 pt-4 border-b border-slate-700/30">
-                <button onclick="switchTab('links')" id="tabLinks" class="pb-2 border-b-2 border-blue-500 text-blue-400 font-bold text-sm">Links</button>
-                <button onclick="switchTab('firewall')" id="tabFirewall" class="pb-2 border-b-2 border-transparent text-slate-400 font-bold text-sm hover:text-white">Firewall (Banned IPs)</button>
-            </div>
-            <div class="flex-1 overflow-auto p-6" id="adminContent">Loading...</div>
-        </div>
-    </div>
-
-    <div onclick="unlockAdmin()" class="mt-8 text-slate-800 text-[10px] cursor-pointer hover:text-slate-600 select-none">v9.0-fortress</div>
 
     <script type="module" src="app.js"></script>
 </body>
