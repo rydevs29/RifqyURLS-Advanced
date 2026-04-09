@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/:id",
+      "destination": "/index.html?id=:id"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/app.js",
+      "destination": "/forbidden.html",
+      "permanent": true
+    },
+    {
+      "source": "/style.css",
+      "destination": "/forbidden.html",
+      "permanent": true
+    }
+  ]
+}
