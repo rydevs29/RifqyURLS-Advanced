@@ -6,6 +6,19 @@
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/go", "destination": "/go.html" },
     { "source": "/forbidden", "destination": "/forbidden.html" },
-    { "source": "/(?!.*\\.)([a-zA-Z0-9-_]+)", "destination": "/index.html?id=$1" }
+    { "source": "/:id([^.]+)", "destination": "/index.html?id=:id" }
+  ],
+  "redirects": [
+    {
+      "source": "/:file(.*\\.js|.*\\.css)",
+      "missing": [
+        {
+          "type": "header",
+          "key": "referer"
+        }
+      ],
+      "destination": "/forbidden",
+      "permanent": false
+    }
   ]
 }
