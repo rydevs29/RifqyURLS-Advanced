@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menuju Link Tujuan...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#020617] text-white flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div id="adblockOverlay" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 text-center hidden">
+        <div class="text-6xl mb-4">🛡️</div>
+        <h2 class="text-3xl font-bold text-red-500 mb-2">Adblock Terdeteksi!</h2>
+        <p class="text-slate-300 max-w-md mb-6">Kami butuh dukunganmu untuk menjaga server tetap hidup. Mohon matikan Adblock lalu muat ulang halaman ini.</p>
+        <button onclick="location.reload()" class="btn-primary px-8 py-3 rounded-xl font-bold">Sudah Dimatikan, Refresh!</button>
+    </div>
+
+    <div class="w-full max-w-3xl glass-card p-6 rounded-3xl text-center">
+        <h2 class="text-xl font-bold text-slate-300 mb-2">Link Tujuan Sedang Disiapkan</h2>
+        
+        <div id="timerDisplay" class="text-5xl font-black text-blue-500 mb-6 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+            5
+        </div>
+
+        <div class="w-full h-[400px] bg-slate-900 rounded-xl border border-slate-700 overflow-hidden relative mb-6">
+            <iframe src="https://lynk.id/rifqyapps" class="w-full h-full border-0"></iframe>
+            <div class="absolute top-2 right-2 bg-black/50 px-2 py-1 rounded text-[10px] text-white/50 backdrop-blur">Advertisement</div>
+        </div>
+
+        <button id="btnContinueAds" class="btn-primary w-full py-4 rounded-xl font-bold text-lg hidden" onclick="goToTarget()">
+            Dapatkan Link
+        </button>
+    </div>
+
+    <script src="ads.js"></script>
+
+    <script>
+        // Cek Adblock
+        window.onload = function() {
+            if (typeof canShowAds === 'undefined') {
+                // Adblock Aktif!
+                document.getElementById('adblockOverlay').classList.remove('hidden');
+            } else {
+                // Aman, jalankan timer
+                startAdTimer();
+            }
+        };
+
+        function startAdTimer() {
+            let timeLeft = 5; // Set 5 detik
+            const timerEl = document.getElementById('timerDisplay');
+            const btn = document.getElementById('btnContinueAds');
+
+            const interval = setInterval(() => {
+                timeLeft--;
+                timerEl.innerText = timeLeft;
+                if(timeLeft <= 0) {
+                    clearInterval(interval);
+                    timerEl.style.display = 'none';
+                    btn.classList.remove('hidden');
+                }
+            }, 1000);
+        }
+
+        function goToTarget() {
+            // Trik Adsterra Popunder ditaruh di sini
+            window.open('https://direct-link-adsterra-kamu.com', '_blank');
+            
+            // Ambil ID dari URL dan arahkan ke index untuk dibuka (atau langsung buka Firebase)
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if(id) {
+                window.location.href = `/index.html?id=${id}`;
+            }
+        }
+    </script>
+</body>
+</html>
