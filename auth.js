@@ -5,30 +5,41 @@ const firebaseConfig = {
     apiKey: "AIzaSyChF12-MFH4BMTE9p2HGypUhvFYSDlilbc",
     authDomain: "rifqyurl.firebaseapp.com",
     projectId: "rifqyurl",
-    // Sesuaikan dengan config kamu
+    databaseURL: "https://rifqyurl-default-rtdb.asia-southeast1.firebasedatabase.app",
+    storageBucket: "rifqyurl.firebasestorage.app",
+    messagingSenderId: "772691101649",
+    appId: "1:772691101649:web:a856d7e9bea45ba04502f0"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Otomatis pindah ke index jika sudah login
+// SENTRY: Pantau apakah login berhasil
 onAuthStateChanged(auth, (user) => {
-    if (user && window.location.pathname.includes('login.html')) {
-        if (user.email === 'invite.rifqydev@gmail.com') {
-            // Jika admin login, bisa pilih ke index atau admin (default ke index dulu)
-            window.location.href = "index.html"; 
-        } else {
-            window.location.href = "index.html";
-        }
+    if (user) {
+        // Jika akun terdeteksi, langsung pindahkan ke Dashboard utama
+        window.location.href = "/";
     }
 });
 
-window.loginGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).catch(err => alert("Login Gagal: " + err.message));
+// FUNGSI LOGIN GOOGLE
+window.loginGoogle = async () => {
+    try {
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider);
+        // Script tidak perlu melakukan apa-apa di sini, 
+        // karena onAuthStateChanged di atas akan langsung mendeteksi dan pindah halaman.
+    } catch (error) {
+        alert("Gagal masuk dengan Google: " + error.message);
+    }
 };
 
-window.loginMicrosoft = () => {
-    const provider = new OAuthProvider('microsoft.com');
-    signInWithPopup(auth, provider).catch(err => alert("Login Gagal: " + err.message));
+// FUNGSI LOGIN MICROSOFT
+window.loginMicrosoft = async () => {
+    try {
+        const provider = new OAuthProvider('microsoft.com');
+        await signInWithPopup(auth, provider);
+    } catch (error) {
+        alert("Gagal masuk dengan Microsoft: " + error.message);
+    }
 };
