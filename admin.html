@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citadel Command | Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col items-center justify-center p-4 min-h-screen relative">
+    <div id="loadingAuth" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#020617]">
+        <i class="fa-solid fa-shield-halved fa-beat-fade text-5xl text-blue-500 mb-4"></i>
+        <p class="text-slate-400 font-bold uppercase tracking-widest text-sm">Memverifikasi Otoritas...</p>
+    </div>
+
+    <div id="adminApp" class="hidden w-full max-w-4xl glass-card p-8 rounded-3xl relative z-10 fade-in">
+        <div class="flex justify-between items-center border-b border-slate-700/50 pb-6 mb-6">
+            <div>
+                <h1 class="text-3xl font-extrabold text-white tracking-tight mb-1"><i class="fa-solid fa-chess-king text-blue-500 mr-2"></i>Admin <span class="text-blue-500">Nexus</span></h1>
+                <p class="text-slate-400 text-xs uppercase tracking-widest font-bold" id="adminEmail">Loading...</p>
+            </div>
+            <button onclick="logoutAdmin()" class="bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white px-4 py-2 rounded-xl font-bold transition-all text-sm border border-red-500/20">
+                <i class="fa-solid fa-power-off"></i> Logout
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-900/50 p-6 rounded-2xl border border-slate-700/50">
+                <h2 class="text-white font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-ticket text-yellow-400"></i> Generate Voucher</h2>
+                <div class="space-y-4">
+                    <select id="voucherType" class="input-field w-full px-4 py-3 rounded-xl text-sm text-slate-300">
+                        <option value="guardian">🛡️ Guardian Tier (Link Permanen)</option>
+                        <option value="architect">🚀 Architect Tier (No Ads + Unli)</option>
+                    </select>
+                    <button onclick="generateVoucher()" class="btn-primary w-full py-3 rounded-xl text-white font-bold shadow-lg">
+                        Buat Kode Baru <i class="fa-solid fa-plus ml-1"></i>
+                    </button>
+                </div>
+                <div class="mt-6 border-t border-slate-700/50 pt-4">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase mb-3">Voucher Tersedia:</h3>
+                    <div id="voucherList" class="space-y-2 max-h-40 overflow-y-auto pr-2">
+                        <p class="text-slate-500 text-xs italic">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/50 p-6 rounded-2xl border border-slate-700/50">
+                <h2 class="text-white font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-chart-line text-green-400"></i> Sistem Monitor</h2>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700 text-center">
+                        <p class="text-3xl font-black text-blue-400" id="statLinks">0</p>
+                        <p class="text-[10px] uppercase font-bold text-slate-400 mt-1">Total Links</p>
+                    </div>
+                    <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700 text-center">
+                        <p class="text-3xl font-black text-red-400" id="statBans">0</p>
+                        <p class="text-[10px] uppercase font-bold text-slate-400 mt-1">Banned IPs</p>
+                    </div>
+                </div>
+                <a href="/index.html" class="block w-full text-center bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-xl font-bold transition-all border border-slate-600 text-sm">
+                    Kembali ke Dashboard Depan
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>
