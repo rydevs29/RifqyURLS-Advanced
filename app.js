@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, ref, set, get, remove, update, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyChF12-MFH4BMTE9p2HGypUhvFYSDlilbc",
@@ -13,6 +14,29 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app); // Inisialisasi Auth
+
+// --- SATPAM DASHBOARD (AUTH GUARD) ---
+const urlParamsApp = new URLSearchParams(window.location.search);
+const isRedirectMode = urlParamsApp.has('id');
+
+// Jika sedang membuka halaman utama (bukan sedang klik link pendek)
+if (!isRedirectMode) {
+    // Sembunyikan form creator sampai dicek
+    document.getElementById('creatorApp').style.display = 'none'; 
+    
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            // JIKA BELUM LOGIN: Tendang ke halaman login!
+            window.location.href = "/login";
+        } else {
+            // JIKA SUDAH LOGIN: Tampilkan Dashboard
+            document.getElementById('creatorApp').style.display = 'block';
+            document.getElementById('creatorApp').classList.add('fade-in');
+        }
+    });
+}
+
 
 // --- UTILS FIX (Bug Limit 5x jadi 10x fixed here) ---
 async function getIP() { 
@@ -82,7 +106,7 @@ window.shorten = async function() {
         userData.count++;
         await set(limitRef, userData);
 
-        const resLink = window.location.origin + "/" + shortId; // Diubah sedikit menyesuaikan vercel rewrite /:id
+        const resLink = window.location.origin + "/" + shortId; 
         document.getElementById('shortLink').innerText = resLink;
         document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(resLink)}`;
         document.getElementById('resultArea').classList.remove('hidden');
@@ -139,12 +163,10 @@ function renderPreview(data) {
         document.getElementById('prevTitle').innerText = "Link Terkunci";
         document.getElementById('passArea').classList.remove('hidden');
         
-        // Bug Fix: Reset tombol agar bersih dari state sebelumnya
         btn.innerText = "Buka Kunci";
         btn.onclick = () => {
             const input = document.getElementById('inputPass').value;
             if(input === data.password) {
-                // Jika password benar, sembunyikan input pass, lalu jalankan Timer
                 document.getElementById('passArea').classList.add('hidden');
                 document.getElementById('prevTitle').innerText = "Password Benar";
                 setupTimerAndRedirect(data);
@@ -162,12 +184,10 @@ function renderPreview(data) {
 function setupTimerAndRedirect(data) {
     const btn = document.getElementById('btnContinue');
     
-    // Jika ada Timer
     if(data.timer > 0) {
         let count = data.timer;
         btn.disabled = true;
         
-        // Interval
         const timerInterval = setInterval(() => {
             btn.innerHTML = `<i class="fa-regular fa-clock"></i> Tunggu... (${count}s)`;
             count--;
@@ -180,7 +200,6 @@ function setupTimerAndRedirect(data) {
             }
         }, 1000);
     } else {
-        // Langsung siap klik
         btn.disabled = false;
         btn.innerHTML = `Lanjut ke Tujuan <i class="fa-solid fa-arrow-right"></i>`;
         btn.onclick = () => processRedirect(data);
